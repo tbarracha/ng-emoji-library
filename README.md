@@ -1,3 +1,10 @@
+# Emoji Lib
+
+Emoji Lib is the ultimate tool to spice up your projects with emojis! It’s fast, fun, and ridiculously easy to use. Search, filter, and copy emojis in seconds, with a sleek design that fits anywhere. Whether you're building the next big app or just want to make people smile, Emoji Lib has you covered.
+
+![proj_emoji_lib_1](https://github.com/user-attachments/assets/68371c4f-4667-4e60-9a00-c7e690bb4890)
+
+
 # NgEmojiLibrary
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
