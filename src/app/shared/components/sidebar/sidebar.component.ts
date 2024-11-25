@@ -16,7 +16,6 @@ export class SidebarComponent implements OnInit {
   selectedCategory: string | null = null;
   firstEmojis: { [category: string]: string } = {};
   isOpen: boolean = false;
-  isMobileView: boolean = window.innerWidth < 640;
 
   constructor(private emojiApiService: EmojiApiService) {}
 
@@ -36,15 +35,11 @@ export class SidebarComponent implements OnInit {
     });
 
     EventService.onSidebarToggled.subscribe(isOpen => (this.isOpen = isOpen));
-    window.addEventListener('resize', this.updateView.bind(this));
   }
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
     EventService.onCategoryClicked.emit(category === 'All' ? undefined : category);
-    if (this.isMobileView) {
-      this.closeSidebar();
-    }
   }
 
   getFirstEmoji(category: string): string {
@@ -53,12 +48,5 @@ export class SidebarComponent implements OnInit {
 
   closeSidebar(): void {
     EventService.onSidebarToggled.emit(false);
-  }
-
-  private updateView(): void {
-    this.isMobileView = window.innerWidth < 640;
-    if (!this.isMobileView) {
-      this.isOpen = true;
-    }
   }
 }

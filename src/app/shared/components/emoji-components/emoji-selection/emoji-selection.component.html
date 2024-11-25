@@ -1,11 +1,21 @@
-<div class="h-full w-full flex items-center justify-center px-4 border-t">
-    <!-- Emoji String Display -->
-    <p class="text-xl break-all flex-grow overflow-hidden m-0">{{ emojiString }}</p>
+<div class="h-full w-full flex items-center justify-between flex-shrink-0 px-4 border-t">
+  <!-- Emoji String Input -->
+  <div class="w-full max-h-32">
+    <textarea
+      #emojiStringInput
+      class="text-xl w-full h-full resize-none border-none focus:outline-none overflow-y-auto m-0 px-2"
+      [value]="emojiString"
+      (input)="updateEmojiString(emojiStringInput.value)"
+      aria-label="Emoji string"
+    ></textarea>
+  </div>
 
+  <!-- Action Buttons -->
+  <div class="flex items-center space-x-2">
     <!-- Clear Button -->
     @if (emojiString.length > 0) {
       <button
-        class="h-full px-4 text-gray-500 hover:text-gray-800"
+        class="h-10 w-10 flex items-center justify-center text-gray-500 hover:text-gray-800"
         (click)="clearEmojis()"
         aria-label="Clear emojis"
       >
@@ -17,12 +27,13 @@
 
     <!-- Copy Button -->
     @if (emojiString.length > 0) {
-      <button 
-        class="h-full px-4 text-gray-500 hover:text-gray-800" 
-        (click)="copyEmojis()" 
+      <button
+        class="h-10 w-10 flex items-center justify-center text-gray-500 hover:text-gray-800"
+        (click)="copyEmojis()"
         aria-label="Copy emojis"
       >
         📋
       </button>
     }
   </div>
+</div>

@@ -1,4 +1,8 @@
-<div class="h-full flex flex-col">
-    <app-searchbar class="h-[60%]"></app-searchbar>
-    <app-emoji-selection class="flex-grow"></app-emoji-selection>
-</div>
+<div class="h-full flex flex-col overflow-hidden">
+    <!-- Search Bar with Fixed Height -->
+    <app-searchbar class="h-[60px] flex-shrink-0"></app-searchbar>
+  
+    <!-- Emoji Selection with Fixed Height -->
+    <app-emoji-selection class="h-[calc(100%-60px)] overflow-hidden"></app-emoji-selection>
+  </div>
+  

@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 })
 export class EmojiApiService {
   private readonly baseUrl = 'https://emoji-api.com';
-  private readonly accessKey = 'insert-your-access-key-here';
+  private readonly accessKey = 'ea7b098ee2cb7f9410048d73e053ce08b2cb1f4e';
   private allEmojis: any[] | null = null;
   private categoryGroupedEmojis: { [category: string]: any[] } | null = null;
   private categoryAndSubcategoryGroupedEmojis: { [category: string]: { [subcategory: string]: any[] } } | null = null;

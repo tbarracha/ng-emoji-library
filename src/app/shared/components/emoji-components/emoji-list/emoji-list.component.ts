@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { EmojiApiService } from '../../../../core/services/emoji-api/emoji-api.service';
 import { EventService } from '../../../../core/services/events/event.service';
 import { CategoryTransformPipe } from "../../../../core/pipes/category-transform.pipe";
@@ -11,7 +11,7 @@ import { EmojiCopiedMessageComponent } from '../emoji-copied-message/emoji-copie
   templateUrl: './emoji-list.component.html',
   styleUrls: []
 })
-export class EmojiListComponent implements OnInit {
+export class EmojiListComponent implements OnInit, OnDestroy {
   @ViewChild('emojiListContainer') emojiListContainer!: ElementRef;
 
   groupedEmojis: { [category: string]: any[] } = {};
@@ -19,17 +19,25 @@ export class EmojiListComponent implements OnInit {
   activeCategory: string | null = null;
   isLoadingEmojis: boolean = true;
 
+  loadingEmojiList: string[] = ['😀', '😂', '😍', '😎', '🤩', '🥳', '😅', '🙃', '🤔', '🤯'];
+  currentLoadingEmoji: string = '';
+  loadingEmojiInterval: any;
+
   constructor(private emojiApiService: EmojiApiService) {}
 
   ngOnInit(): void {
+    this.startLoadingEmojiAnimation();
+
     this.emojiApiService.getAllEmojiGroupedByCategory().subscribe({
       next: groupedEmojis => {
         this.groupedEmojis = groupedEmojis;
         this.isLoadingEmojis = false;
+        this.stopLoadingEmojiAnimation();
       },
       error: err => {
         console.error('Failed to load emojis:', err);
         this.isLoadingEmojis = false;
+        this.stopLoadingEmojiAnimation();
       }
     });
 
@@ -43,6 +51,28 @@ export class EmojiListComponent implements OnInit {
       this.filterByCategory(category);
       this.scrollToTop();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.stopLoadingEmojiAnimation();
+  }
+
+  private startLoadingEmojiAnimation(): void {
+    const remainingEmojis = [...this.loadingEmojiList];
+    this.loadingEmojiInterval = setInterval(() => {
+      if (remainingEmojis.length === 0) {
+        // Reset to allow re-shuffling
+        remainingEmojis.push(...this.loadingEmojiList);
+      }
+      const randomIndex = Math.floor(Math.random() * remainingEmojis.length);
+      this.currentLoadingEmoji = remainingEmojis.splice(randomIndex, 1)[0];
+    }, 100); // Change emoji every 100ms
+  }
+
+  private stopLoadingEmojiAnimation(): void {
+    if (this.loadingEmojiInterval) {
+      clearInterval(this.loadingEmojiInterval);
+    }
   }
 
   private filterEmojis(searchInput: string): void {
